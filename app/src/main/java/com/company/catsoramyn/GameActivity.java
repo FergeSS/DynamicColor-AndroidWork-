@@ -13,6 +13,7 @@ import com.company.catsoramyn.databinding.ActivityGameBinding;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class GameActivity extends Property {
@@ -22,7 +23,7 @@ public class GameActivity extends Property {
     Integer[] colors = {R.drawable.green, R.drawable.red, R.drawable.blue, R.drawable.pink, R.drawable.white, R.drawable.black};
     List<Integer> colorsList = Arrays.asList(colors);
     int correctAnswer;
-    long time = -10000;
+    long time = -10100;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -38,6 +39,9 @@ public class GameActivity extends Property {
             public void onChronometerTick(Chronometer chronometer) {
                 long elapsedMillis = SystemClock.elapsedRealtime() - binding.timer.getBase();
 
+                int seconds = (int) (-elapsedMillis / 1000);
+                chronometer.setText(String.format(Locale.getDefault(), "%d", seconds));
+
                 if (elapsedMillis > 0) {
                     dialog.show();
                     binding.timer.stop();
@@ -49,7 +53,7 @@ public class GameActivity extends Property {
 
     private void setNewLevel() {
         binding.timer.stop();
-        binding.timer.setBase(SystemClock.elapsedRealtime() + 11000);
+        binding.timer.setBase(SystemClock.elapsedRealtime() + 10010);
         binding.timer.start();
         Collections.shuffle(colorsList);
         correctAnswer = new Random().nextInt(6);
@@ -66,6 +70,7 @@ public class GameActivity extends Property {
     public void gameButton1(View v) {
         Settings.action(GameActivity.this);
         if (correctAnswer != 0) {
+            binding.timer.stop();
             dialog.show();
             return;
         }
@@ -75,6 +80,7 @@ public class GameActivity extends Property {
     public void gameButton2(View v) {
         Settings.action(GameActivity.this);
         if (correctAnswer != 1) {
+            binding.timer.stop();
             dialog.show();
             return;
         }
@@ -84,6 +90,7 @@ public class GameActivity extends Property {
     public void gameButton3(View v) {
         Settings.action(GameActivity.this);
         if (correctAnswer != 2) {
+            binding.timer.stop();
             dialog.show();
             return;
         }
@@ -93,6 +100,7 @@ public class GameActivity extends Property {
     public void gameButton4(View v) {
         Settings.action(GameActivity.this);
         if (correctAnswer != 3) {
+            binding.timer.stop();
             dialog.show();
             return;
         }
@@ -102,6 +110,7 @@ public class GameActivity extends Property {
     public void gameButton5(View v) {
         Settings.action(GameActivity.this);
         if (correctAnswer != 4) {
+            binding.timer.stop();
             dialog.show();
             return;
         }
@@ -111,6 +120,7 @@ public class GameActivity extends Property {
     public void gameButton6(View v) {
         Settings.action(GameActivity.this);
         if (correctAnswer != 5) {
+            binding.timer.stop();
             dialog.show();
             return;
         }
