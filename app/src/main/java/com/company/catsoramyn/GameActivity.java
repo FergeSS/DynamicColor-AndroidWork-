@@ -2,6 +2,7 @@ package com.company.catsoramyn;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.view.View;
 import android.view.Window;
@@ -20,10 +21,14 @@ public class GameActivity extends Property {
     private ActivityGameBinding binding;
     public static boolean active = false;
     Dialog dialog;
-    Integer[] colors = {R.drawable.green, R.drawable.red, R.drawable.blue, R.drawable.pink, R.drawable.white, R.drawable.black};
-    List<Integer> colorsList = Arrays.asList(colors);
+    Integer[] buttonColors = {R.drawable.color_button, R.drawable.color_button__1_, R.drawable.color_button__2_, R.drawable.color_button__3_, R.drawable.color_button__4_, R.drawable.color_button__5_,
+            R.drawable.color_button__8_, R.drawable.color_button__9_, R.drawable.color_button__10_, R.drawable.color_button__11_, R.drawable.color_button__12_, R.drawable.color_button__13_, R.drawable.color_button__14_, R.drawable.color_button__15_, R.drawable.color_button__16_,
+            R.drawable.color_button__17_, R.drawable.color_button__18_, R.drawable.color_button__19_, R.drawable.color_button__20_, R.drawable.color_button__21_, R.drawable.color_button__22_, R.drawable.color_button__23_};
+    List<Integer> colorsList = Arrays.asList(buttonColors);
     int correctAnswer;
     long time = -10100;
+    int score = -1;
+    boolean clickable = true;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -48,83 +53,236 @@ public class GameActivity extends Property {
                 }
             }
         });
-        setNewLevel();
+        setNewLevel(false);
     }
 
-    private void setNewLevel() {
-        binding.timer.stop();
-        binding.timer.setBase(SystemClock.elapsedRealtime() + 10010);
-        binding.timer.start();
-        Collections.shuffle(colorsList);
-        correctAnswer = new Random().nextInt(6);
-        binding.upLine.setImageResource(colorsList.get(correctAnswer));
-        binding.downLine.setImageResource(colorsList.get(correctAnswer));
-        binding.but1.setBackgroundResource(colorsList.get(0));
-        binding.but2.setBackgroundResource(colorsList.get(1));
-        binding.but3.setBackgroundResource(colorsList.get(2));
-        binding.but4.setBackgroundResource(colorsList.get(3));
-        binding.but5.setBackgroundResource(colorsList.get(4));
-        binding.but6.setBackgroundResource(colorsList.get(5));
+    private void setNewLevel(boolean notFirst) {
+        if (notFirst) {
+            clickable = false;
+            if (correctAnswer == 0) {
+                binding.but1Box.setImageResource(R.drawable.correct);
+                binding.but1Box.setVisibility(View.VISIBLE);
+            }
+            else if (correctAnswer == 1) {
+                binding.but2Box.setImageResource(R.drawable.correct);
+                binding.but2Box.setVisibility(View.VISIBLE);
+            }
+            else if (correctAnswer == 2) {
+                binding.but3Box.setImageResource(R.drawable.correct);
+                binding.but3Box.setVisibility(View.VISIBLE);
+            }
+            else if (correctAnswer == 3) {
+                binding.but4Box.setImageResource(R.drawable.correct);
+                binding.but4Box.setVisibility(View.VISIBLE);
+            }
+            else if (correctAnswer == 4) {
+                binding.but5Box.setImageResource(R.drawable.correct);
+                binding.but5Box.setVisibility(View.VISIBLE);
+            }
+            else if (correctAnswer == 5) {
+                binding.but6Box.setImageResource(R.drawable.correct);
+                binding.but6Box.setVisibility(View.VISIBLE);
+            }
+            ++score;
+            binding.score.setText(String.valueOf(score));
+            binding.timer.stop();
+
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (correctAnswer == 0) {
+                        binding.but1Box.setVisibility(View.INVISIBLE);
+                    }
+                    else if (correctAnswer == 1) {
+                        binding.but2Box.setVisibility(View.INVISIBLE);
+                    }
+                    else if (correctAnswer == 2) {
+                        binding.but3Box.setVisibility(View.INVISIBLE);
+                    }
+                    else if (correctAnswer == 3) {
+                        binding.but4Box.setVisibility(View.INVISIBLE);
+                    }
+                    else if (correctAnswer == 4) {
+                        binding.but5Box.setVisibility(View.INVISIBLE);
+                    }
+                    else if (correctAnswer == 5) {
+                        binding.but6Box.setVisibility(View.INVISIBLE);
+                    }
+                    binding.timer.setBase(SystemClock.elapsedRealtime() + 10010);
+                    binding.timer.start();
+                    Collections.shuffle(colorsList);
+                    correctAnswer = new Random().nextInt(6);
+                    binding.upLine.setImageResource(colorsList.get(correctAnswer));
+                    binding.downLine.setImageResource(colorsList.get(correctAnswer));
+                    binding.but1.setBackgroundResource(colorsList.get(0));
+                    binding.but2.setBackgroundResource(colorsList.get(1));
+                    binding.but3.setBackgroundResource(colorsList.get(2));
+                    binding.but4.setBackgroundResource(colorsList.get(3));
+                    binding.but5.setBackgroundResource(colorsList.get(4));
+                    binding.but6.setBackgroundResource(colorsList.get(5));
+
+                    clickable = true;
+                }
+            }, 1000);
+        } else {
+
+            ++score;
+            binding.score.setText(String.valueOf(score));
+            binding.timer.stop();
+
+            binding.timer.setBase(SystemClock.elapsedRealtime() + 10010);
+            binding.timer.start();
+            Collections.shuffle(colorsList);
+            correctAnswer = new Random().nextInt(6);
+            binding.upLine.setImageResource(colorsList.get(correctAnswer));
+            binding.downLine.setImageResource(colorsList.get(correctAnswer));
+            binding.but1.setBackgroundResource(colorsList.get(0));
+            binding.but2.setBackgroundResource(colorsList.get(1));
+            binding.but3.setBackgroundResource(colorsList.get(2));
+            binding.but4.setBackgroundResource(colorsList.get(3));
+            binding.but5.setBackgroundResource(colorsList.get(4));
+            binding.but6.setBackgroundResource(colorsList.get(5));
+        }
+
     }
 
     public void gameButton1(View v) {
+        if (!clickable) { return; }
         Settings.action(GameActivity.this);
         if (correctAnswer != 0) {
             binding.timer.stop();
-            dialog.show();
+            binding.but1Box.setVisibility(View.VISIBLE);
+            binding.but1Box.setImageResource(R.drawable.incorrect);
+            clickable = false;
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    clickable = true;
+                    binding.but1Box.setVisibility(View.INVISIBLE);
+                    dialog.show();
+                }
+            }, 1000);
+
             return;
         }
-        setNewLevel();
+        setNewLevel(true);
     }
 
     public void gameButton2(View v) {
+        if (!clickable) { return; }
         Settings.action(GameActivity.this);
         if (correctAnswer != 1) {
             binding.timer.stop();
-            dialog.show();
+            binding.but2Box.setVisibility(View.VISIBLE);
+            binding.but2Box.setImageResource(R.drawable.incorrect);
+            clickable = false;
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    clickable = true;
+                    binding.but2Box.setVisibility(View.INVISIBLE);
+                    dialog.show();
+                }
+            }, 1000);
+
             return;
         }
-        setNewLevel();
+        setNewLevel(true);
     }
 
     public void gameButton3(View v) {
+        if (!clickable) { return; }
         Settings.action(GameActivity.this);
         if (correctAnswer != 2) {
             binding.timer.stop();
-            dialog.show();
+            binding.but3Box.setVisibility(View.VISIBLE);
+            binding.but3Box.setImageResource(R.drawable.incorrect);
+            clickable = false;
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    clickable = true;
+                    binding.but3Box.setVisibility(View.INVISIBLE);
+                    dialog.show();
+                }
+            }, 1000);
+
             return;
         }
-        setNewLevel();
+        setNewLevel(true);
     }
 
     public void gameButton4(View v) {
+        if (!clickable) { return; }
         Settings.action(GameActivity.this);
         if (correctAnswer != 3) {
             binding.timer.stop();
-            dialog.show();
+            binding.but4Box.setVisibility(View.VISIBLE);
+            binding.but4Box.setImageResource(R.drawable.incorrect);
+            clickable = false;
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    clickable = true;
+                    binding.but4Box.setVisibility(View.INVISIBLE);
+                    dialog.show();
+                }
+            }, 1000);
+
             return;
         }
-        setNewLevel();
+        setNewLevel(true);
     }
 
     public void gameButton5(View v) {
+        if (!clickable) { return; }
         Settings.action(GameActivity.this);
         if (correctAnswer != 4) {
             binding.timer.stop();
-            dialog.show();
+            binding.but5Box.setVisibility(View.VISIBLE);
+            binding.but5Box.setImageResource(R.drawable.incorrect);
+            clickable = false;
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    clickable = true;
+                    binding.but5Box.setVisibility(View.INVISIBLE);
+                    dialog.show();
+                }
+            }, 1000);
+
             return;
         }
-        setNewLevel();
+        setNewLevel(true);
     }
 
     public void gameButton6(View v) {
+        if (!clickable) { return; }
         Settings.action(GameActivity.this);
         if (correctAnswer != 5) {
             binding.timer.stop();
-            dialog.show();
+            binding.but6Box.setVisibility(View.VISIBLE);
+            binding.but6Box.setImageResource(R.drawable.incorrect);
+            clickable = false;
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    clickable = true;
+                    binding.but6Box.setVisibility(View.INVISIBLE);
+                    dialog.show();
+                }
+            }, 1000);
+
             return;
         }
-        setNewLevel();
+        setNewLevel(true);
     }
 
     public void home(View v) {
@@ -134,8 +292,9 @@ public class GameActivity extends Property {
 
     public void replay(View v) {
         Settings.action(GameActivity.this);
+        score = -1;
         dialog.dismiss();
-        setNewLevel();
+        setNewLevel(false);
     }
 
     private void dialogSettings() {
@@ -153,7 +312,7 @@ public class GameActivity extends Property {
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
         WindowManager.LayoutParams wlp = dialog.getWindow().getAttributes();
-        wlp.dimAmount = 0.7f;
+        wlp.dimAmount = 0.48f;
         dialog.getWindow().setAttributes(wlp);
         dialog.setContentView(R.layout.dialog);
     }

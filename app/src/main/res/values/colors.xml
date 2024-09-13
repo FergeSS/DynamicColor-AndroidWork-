@@ -2,9 +2,31 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="light_blue_600">#FF039BE5</color>
-    <color name="light_blue_900">#FF01579B</color>
-    <color name="light_blue_A200">#FF40C4FF</color>
-    <color name="light_blue_A400">#FF00B0FF</color>
-    <color name="black_overlay">#66000000</color>
+    <color name="color">#F04444</color>
+    <color name="color_1">#6246A3</color>
+    <color name="color_2">#61CCEB</color>
+    <color name="color_3">#FF6C9B</color>
+    <color name="color_4">#68D24D</color>
+    <color name="color_5">#FFCD1C</color>
+    <color name="color_6">#86EFE8</color>
+    <color name="color_7">#D693FF</color>
+    <color name="color_8">#DB541A</color>
+    <color name="color_9">#127B9C</color>
+    <color name="color_10">#D693FF</color>
+    <color name="color_11">#86EFE8</color>
+    <color name="color_12">#FFA16C</color>
+    <color name="color_13">#FFA9A9</color>
+    <color name="color_14">#E9FF92</color>
+    <color name="color_15">#62B4FF</color>
+    <color name="color_16">#581ADB</color>
+    <color name="color_17">#0C7455</color>
+    <color name="color_18">#28A79E</color>
+    <color name="color_19">#AA14A4</color>
+    <color name="color_20">#20247B</color>
+    <color name="color_21">#A47D71</color>
+    <color name="color_22">#9C1919</color>
+    <color name="color_23">#8B2EC3</color>
+    <color name="score_color">#1FC43A</color>
+    <color name="timer_color">#005A9A</color>
+    <color name="dialog">#8F2263</color>
 </resources>

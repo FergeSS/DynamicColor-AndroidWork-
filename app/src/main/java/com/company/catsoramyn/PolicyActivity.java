@@ -16,7 +16,11 @@ public class PolicyActivity extends Property {
         binding = ActivityPolicyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.policy.loadUrl("https://telegra.ph/Fun-Laundry-08-30");
+        binding.policy.setBackgroundColor(0x0000000);
+        binding.policy.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+
+        binding.policy.loadUrl("file:///android_asset/policy.html");
+
 
         active = true;
     }

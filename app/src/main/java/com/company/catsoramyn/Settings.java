@@ -17,16 +17,16 @@ public class Settings {
             }
         }
 
-//        if (context.getSharedPreferences("settings", MODE_PRIVATE).getBoolean("sound_enabled", true)) {
-//            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.click);
-//            mediaPlayer.setVolume(0.4f, 0.4f);
-//            mediaPlayer.start();
-//            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//                @Override
-//                public void onCompletion(MediaPlayer mp) {
-//                    mp.release();
-//                }
-//            });
-//        }
+        if (context.getSharedPreferences("settings", MODE_PRIVATE).getBoolean("sound_enabled", true)) {
+            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.click);
+            mediaPlayer.setVolume(0.4f, 0.4f);
+            mediaPlayer.start();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mp.release();
+                }
+            });
+        }
     }
 }
